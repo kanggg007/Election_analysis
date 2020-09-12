@@ -36,27 +36,39 @@ with open(file_to_load) as election_data:
         if canadidates_name not in Canadidate_option:
             Canadidate_option.append(canadidates_name)
             candidate_votes[canadidates_name] = 0
-
         candidate_votes[canadidates_name] +=1    
 
+
+with open(file_to_save, "w") as txt_file:
+    election_results = (
+        f"\nElection Results\n"
+        f"-------------------------\n"
+        f"Total Votes: {total_votes:,}\n"
+        f"-------------------------\n")
+    print(election_results, end="")
+    txt_file.write(election_results)
 
     for canadidates_name in candidate_votes:
         votes = candidate_votes[canadidates_name]
         vote_percentage = float(votes) / float(total_votes) * 100
-        print(f"{canadidates_name}: {vote_percentage:.1f}% ({votes:,})\n")
-             
+        candidate_results = (f"{canadidates_name}: {vote_percentage:.1f}% ({votes:,})\n")
+        print(candidate_results)
+        txt_file.write(candidate_results) 
         if votes >= winning_count and vote_percentage >= winning_percentage:
             winning_count = votes
             winning_percentage = vote_percentage
-
             winning_candidate = canadidates_name
 
-winning_summary = (
-    f"-------------------\n"
-    f"winner is {winning_candidate}\n"
-    f"winner vote percentage is {winning_percentage}%\n"
-    f"winner vote is {winning_count}\n"
-    f"-------------------------\n")
-print(winning_summary)
+
+
+
+    winning_summary = (
+        f"-------------------\n"
+        f"winner is {winning_candidate}\n"
+        f"winner vote percentage is {winning_percentage}%\n"
+        f"winner vote is {winning_count}\n"
+        f"-------------------------\n")
+    print(winning_summary)
+    txt_file.write(winning_summary) 
 
 
